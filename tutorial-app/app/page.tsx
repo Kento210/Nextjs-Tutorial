@@ -1,8 +1,15 @@
 'use client';
 
+interface SearchCatImage {
+  id: string;
+  url: string;
+  width: number;
+  height: number;
+}
+
 export default function Home() {
 
-    const fetchCatImage = async () => {
+    const fetchCatImage = async (): Promise<SearchCatImage> => {
       const res = await fetch('https://api.thecatapi.com/v1/images/search');
       const data = await res.json();
       // console.log(data);
