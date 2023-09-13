@@ -1,4 +1,5 @@
 'use client';
+import { useState } from 'react';
 
 interface SearchCatImage {
   id: string;
@@ -9,11 +10,18 @@ interface SearchCatImage {
 
 export default function Home() {
 
+    const [catImageURL, setCatImageURL] = useState("");
+
     const fetchCatImage = async (): Promise<SearchCatImage> => {
       const res = await fetch('https://api.thecatapi.com/v1/images/search');
       const data = await res.json();
       // console.log(data);
-      return data[0].url;
+      return data[0];
+    };
+
+    const handleClick = async () => {
+      const data = await fetchCatImage();
+      setCatImageURL(data.url);
     };
 
   return (
@@ -29,12 +37,12 @@ export default function Home() {
         <h1>猫画像を取得</h1>
         <p>
           <img
-            src="https://cdn2.thecatapi.com/images/4kc.gif"
+            src={catImageURL}
             width={500}
             height="auto"
           />
         </p>
-        <button style={{ marginTop:"18"}} onClick={fetchCatImage}>
+        <button style={{ marginTop:18}} onClick={handleClick}>
           次の猫画像
         </button>
     </div>
