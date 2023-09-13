@@ -1,4 +1,11 @@
 export default function Home() {
+
+    const fetchCatImage = async () => {
+      const res = await fetch('https://api.thecatapi.com/v1/images/search');
+      const data = await res.json();
+      console.log(data);
+    };
+
   return (
     <div
       style={{
@@ -17,7 +24,9 @@ export default function Home() {
             height="auto"
           />
         </p>
-        <button style={{ marginTop:"18"}}>次の猫画像</button>
+        <button style={{ marginTop:"18"}} onClick={fetchCatImage}>
+          次の猫画像
+        </button>
     </div>
   )
 }
