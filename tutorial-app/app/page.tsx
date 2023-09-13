@@ -5,7 +5,8 @@ export default function Home() {
     const fetchCatImage = async () => {
       const res = await fetch('https://api.thecatapi.com/v1/images/search');
       const data = await res.json();
-      console.log(data);
+      // console.log(data);
+      return data[0].url;
     };
 
   return (
