@@ -13,6 +13,7 @@ export default function RootLayout({
       <head>
       <body>
         <h1>Header</h1>
+        {children}
       </body>
       </head>
     </html>
