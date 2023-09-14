@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import type { GetServerSideProps } from 'next';
+import type { GetServerSideProps, NextPage } from 'next';
 
 interface SearchCatImage {
   id: string;
@@ -20,7 +20,7 @@ const fetchCatImage = async (): Promise<SearchCatImage> => {
   return data[0];
 };
 
-export default function Home() {
+const Home: NextPage<IndexPageProps> = ({ initialCatImageURL }) => { 
 
     const [catImageURL, setCatImageURL] = useState("");
 
@@ -65,3 +65,5 @@ export const getServerSideProps: GetServerSideProps<
       },
     };
   };
+
+export default Home;
