@@ -10,7 +10,7 @@ interface SearchCatImage {
 }
 
 interface IndexPageProps {
-  initialCatImageURL: string;
+  startCatImage: string;
 }
 
 const fetchCatImage = async (): Promise<SearchCatImage> => {
@@ -20,7 +20,7 @@ const fetchCatImage = async (): Promise<SearchCatImage> => {
   return data[0];
 };
 
-const Home: NextPage<IndexPageProps> = ({ initialCatImageURL }) => { 
+const Home: NextPage<IndexPageProps> = ({ startCatImage }) => { 
 
     const [catImageURL, setCatImageURL] = useState("");
 
@@ -54,15 +54,9 @@ const Home: NextPage<IndexPageProps> = ({ initialCatImageURL }) => {
   )
 }
 
-// SSRを実装
-export const ssr = async () => {
-  const data = await fetchCatImage();
-  const initialCatImageURL = data.url;
-  return {
-    props: {
-      initialCatImageURL,
-    },
-  };
-}
-
 export default Home;
+
+export async function getServerComponentProps() {
+  const startCatImage = await fetchCatImage();
+  return { props: { startCatImage } };
+}
