@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import type { GetServerSideProps, NextPage } from 'next';
+import type { NextPage } from 'next';
 
 interface SearchCatImage {
   id: string;
@@ -55,15 +55,14 @@ const Home: NextPage<IndexPageProps> = ({ initialCatImageURL }) => {
 }
 
 // SSRを実装
-export const getServerSideProps: GetServerSideProps<
-  IndexPageProps
-  > = async () => {
-    const data = await fetchCatImage();
-    return {
-      props: {
-        initialCatImageURL: data.url,
-      },
-    };
+export const ssr = async () => {
+  const data = await fetchCatImage();
+  const initialCatImageURL = data.url;
+  return {
+    props: {
+      initialCatImageURL,
+    },
   };
+}
 
 export default Home;
