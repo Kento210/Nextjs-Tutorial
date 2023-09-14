@@ -1,5 +1,6 @@
 'use client';
 import { useState } from 'react';
+import type { GetServerSideProps } from 'next';
 
 interface SearchCatImage {
   id: string;
@@ -8,16 +9,20 @@ interface SearchCatImage {
   height: number;
 }
 
+interface IndexPageProps {
+  initialCatImageURL: string;
+}
+
+const fetchCatImage = async (): Promise<SearchCatImage> => {
+  const res = await fetch('https://api.thecatapi.com/v1/images/search');
+  const data = await res.json();
+  // console.log(data);
+  return data[0];
+};
+
 export default function Home() {
 
     const [catImageURL, setCatImageURL] = useState("");
-
-    const fetchCatImage = async (): Promise<SearchCatImage> => {
-      const res = await fetch('https://api.thecatapi.com/v1/images/search');
-      const data = await res.json();
-      // console.log(data);
-      return data[0];
-    };
 
     const handleClick = async () => {
       const data = await fetchCatImage();
@@ -48,3 +53,15 @@ export default function Home() {
     </div>
   )
 }
+
+// SSRを実装
+export const getServerSideProps: GetServerSideProps<
+  IndexPageProps
+  > = async () => {
+    const data = await fetchCatImage();
+    return {
+      props: {
+        initialCatImageURL: data.url,
+      },
+    };
+  };
