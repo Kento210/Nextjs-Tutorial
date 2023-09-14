@@ -56,7 +56,7 @@ const Home: NextPage<IndexPageProps> = ({ startCatImage }) => {
 
 export default Home;
 
-export async function getServerComponentProps() {
+export async function getServerComponent() {
   const startCatImage = await fetchCatImage();
   return { props: { startCatImage } };
 }
